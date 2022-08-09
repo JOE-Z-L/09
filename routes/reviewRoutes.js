@@ -11,11 +11,13 @@ router
   .post(
     authController.protect,
     authController.restrictTo('user'),
+    reviewController.setTourUserIds,
     reviewController.createReview
   );
 
 router
   .route('/:d')
+  .patch(reviewController.updateReview)
   .delete(
     authController.restrictTo('user', 'admin'),
     reviewController.deleteReview
