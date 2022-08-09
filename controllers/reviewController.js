@@ -1,21 +1,8 @@
 const Review = require('./../models/reviewModel');
-const catchAsync = require('./../utils/catchAsync');
+// const catchAsync = require('./../utils/catchAsync');
 const factory = require('./handlerFactory');
 
-exports.getAllReviews = catchAsync(async (req, res, next) => {
-  let filter = {};
-  //Checar se na get vem um ID de um tour se sim entao filter sera chamado, entao so tours que da match no ID vao aparecer
-  if (req.params.tourId) filter = { tour: req.params.tourId };
-  const reviews = await Review.find(filter);
-
-  res.status(200).json({
-    status: 'success',
-    results: reviews.length,
-    data: {
-      reviews
-    }
-  });
-});
+exports.getAllReviews = factory.getAll(Review);
 
 exports.setTourUserIds = (req, res, next) => {
   // Allow nested routes
@@ -24,6 +11,7 @@ exports.setTourUserIds = (req, res, next) => {
   next();
 };
 
+exports.getReview = factory.getOne(Review);
 exports.createReview = factory.createOne(Review);
 exports.updateReview = factory.updateOne(Review);
 exports.deleteReview = factory.deleteOne(Review);
