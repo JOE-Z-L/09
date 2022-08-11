@@ -128,7 +128,7 @@ exports.getDistances = catchAsync(async (req, res, next) => {
   const { distance, latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');
 
-  const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
+  const multiplier = unit === 'mi' ? 0.000621371 : 0.001;
 
   if (!lat || !lng) {
     next(
@@ -147,7 +147,7 @@ exports.getDistances = catchAsync(async (req, res, next) => {
           coordinates: [lng * 1, lat * 1]
         },
         distanceField: 'distance',
-        distanceMultiplier: 0.001
+        distanceMultiplier: multiplier
       }
     },
     {
