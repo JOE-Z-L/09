@@ -14,6 +14,7 @@ const userRouter = require("./routes/userRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 const viewRoute = require("./routes/viewRoutes");
 const csp = require("express-csp");
+const cors = require("cors");
 
 const app = express();
 
@@ -33,6 +34,13 @@ app.use(function(req, res, next) {
   );
   next();
 });
+
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000"
+  })
+);
 
 // abaixo tentando consertar o erro "Refused to load the script 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js' because it violates the following Content Security Policy directive: "script-src 'self'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback."
 // csp.extend(app, {
