@@ -33,6 +33,73 @@ app.use(
     crossOriginEmbedderPolicy: false
   })
 );
+csp.extend(app, {
+  policy: {
+    directives: {
+      "default-src": ["self"],
+      "style-src": ["self", "unsafe-inline", "https:"],
+      "font-src": ["self", "https://fonts.gstatic.com"],
+      "script-src": [
+        "self",
+        "unsafe-inline",
+        "data",
+        "blob",
+        "https://js.stripe.com",
+        "https://api.mapbox.com"
+      ],
+      "worker-src": [
+        "self",
+        "unsafe-inline",
+        "data:",
+        "blob:",
+        "https://js.stripe.com",
+        "https://api.mapbox.com"
+      ],
+      "frame-src": [
+        "self",
+        "unsafe-inline",
+        "data:",
+        "blob:",
+        "https://js.stripe.com",
+        "https://api.mapbox.com"
+      ],
+      "img-src": [
+        "self",
+        "unsafe-inline",
+        "data:",
+        "blob:",
+        "https://js.stripe.com",
+        "https://api.mapbox.com"
+      ],
+      "connect-src": [
+        "self",
+        "unsafe-inline",
+        "data:",
+        "blob:",
+        "https://api.mapbox.com",
+        "https://events.mapbox.com"
+      ]
+    }
+  }
+});
+
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: false,
+    directives: {
+      defaultSrc: ["'self'"],
+      connectSrc: ["'self'", "ws://127.0.0.1:*"],
+      scriptSrc: [
+        "'self'",
+        "https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js",
+        "ajax.googleapis.com *"
+      ],
+      styleSrc: ["'self'", "fonts.googleapis.com"],
+      fontSrc: ["fonts.gstatic.com"],
+      upgradeInsecureRequests: []
+    }
+  })
+);
 
 // Further HELMET configuration for Security Policy (CSP)
 const scriptSrcUrls = [
