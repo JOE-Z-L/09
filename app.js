@@ -62,58 +62,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-// abaixo tentando consertar o erro "Refused to load the script 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js' because it violates the following Content Security Policy directive: "script-src 'self'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback."
-// csp.extend(app, {
-//   policy: {
-//     directives: {
-//       "default-src": ["self"],
-//       "style-src": ["self", "unsafe-inline", "https:"],
-//       "font-src": ["self", "https://fonts.gstatic.com"],
-//       "script-src": [
-//         "self",
-//         "unsafe-inline",
-//         "data",
-//         "blob",
-//         "https://js.stripe.com",
-//         "https://api.mapbox.com",
-//         "https://*.cloudflare.com"
-//       ],
-//       "worker-src": [
-//         "self",
-//         "unsafe-inline",
-//         "data:",
-//         "blob:",
-//         "https://js.stripe.com",
-//         "https://api.mapbox.com"
-//       ],
-//       "frame-src": [
-//         "self",
-//         "unsafe-inline",
-//         "data:",
-//         "blob:",
-//         "https://js.stripe.com",
-//         "https://api.mapbox.com"
-//       ],
-//       "img-src": [
-//         "self",
-//         "unsafe-inline",
-//         "data:",
-//         "blob:",
-//         "https://js.stripe.com",
-//         "https://api.mapbox.com"
-//       ],
-//       "connect-src": [
-//         "self",
-//         "unsafe-inline",
-//         "data:",
-//         "blob:",
-//         "https://api.mapbox.com",
-//         "https://events.mapbox.com"
-//       ]
-//     }
-//   }
-// });
-
 //Dev login
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
