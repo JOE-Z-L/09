@@ -6,6 +6,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
@@ -27,6 +28,32 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Set security http
 
+app.use(
+  helmet({
+    crossOriginEmbedderPolicy: false
+  })
+);
+
+// Further HELMET configuration for Security Policy (CSP)
+const scriptSrcUrls = [
+  "https://api.tiles.mapbox.com/",
+  "https://api.mapbox.com/",
+  "https://*.cloudflare.com"
+];
+const styleSrcUrls = [
+  "https://api.mapbox.com/",
+  "https://api.tiles.mapbox.com/",
+  "https://fonts.googleapis.com/",
+  "https://www.myfonts.com/fonts/radomir-tinkov/gilroy/*"
+];
+const connectSrcUrls = [
+  "https://*.mapbox.com/",
+  "https://*.cloudflare.com",
+  "http://127.0.0.1:3000"
+];
+
+const fontSrcUrls = ["fonts.googleapis.com", "fonts.gstatic.com"];
+
 app.use(function(req, res, next) {
   res.setHeader(
     "Content-Security-Policy",
@@ -34,13 +61,6 @@ app.use(function(req, res, next) {
   );
   next();
 });
-
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:3000"
-  })
-);
 
 // abaixo tentando consertar o erro "Refused to load the script 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js' because it violates the following Content Security Policy directive: "script-src 'self'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback."
 // csp.extend(app, {
@@ -113,6 +133,8 @@ app.use(
   })
 );
 
+app.use(cookieParser());
+
 //Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 
@@ -136,7 +158,7 @@ app.use(
 // Test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  //console.log(req.headers);
+  console.log(req.cookies);
 
   next();
 });
