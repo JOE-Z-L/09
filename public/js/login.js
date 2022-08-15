@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios from "axios";
-import { showAlert } from "./alerts";
+import { showAlert } from "./alert";
 
 export const login = async (email, password) => {
   try {
