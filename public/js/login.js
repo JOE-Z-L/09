@@ -10,9 +10,15 @@ const login = async (email, password) => {
       }
     });
 
+    if (res.data.status === "success") {
+      alert("logged in successfully");
+      window.setTimeout(() => {
+        location.assign("/");
+      }, 1500);
+    }
     console.log(res);
   } catch (err) {
-    console.log(err.response.data);
+    alert(err.response.data.message);
   }
 };
 
