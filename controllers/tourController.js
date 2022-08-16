@@ -1,7 +1,7 @@
 const Tour = require('./../models/tourModel');
 const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
+const AppError = require('./../utils/appError');
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
@@ -125,7 +125,7 @@ exports.getToursWithin = catchAsync(async (req, res, next) => {
 });
 
 exports.getDistances = catchAsync(async (req, res, next) => {
-  const { distance, latlng, unit } = req.params;
+  const { latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');
 
   const multiplier = unit === 'mi' ? 0.000621371 : 0.001;
