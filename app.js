@@ -33,6 +33,20 @@ app.use(
     crossOriginEmbedderPolicy: false
   })
 );
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'", "https:", "http:", "data:", "ws:"],
+      baseUri: ["'self'"],
+      fontSrc: ["'self'", "https:", "http:", "data:"],
+      scriptSrc: ["'self'", "https:", "http:", "blob:"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https:", "http:"],
+      imgSrc: ["'self'", "data:", "blob:"]
+    }
+  })
+);
+
 csp.extend(app, {
   policy: {
     directives: {
